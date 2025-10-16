@@ -8,13 +8,9 @@ public class PrimeWithInRange {
 			if(num%i==0) {
 
 				return false;
-
 			}
-
-		}
-
+}
 		return true;
-
 	}
 
 	int primeSum(int st,int ed) {

@@ -10,7 +10,7 @@ public class Spynumber {
 			sum=sum+last;
 			x=sum*last;
 			n=n/10;
-		}
+		}System.out.println(sum);
 		if(x==sum) {
 		System.out.println("Spy number");
 		}
