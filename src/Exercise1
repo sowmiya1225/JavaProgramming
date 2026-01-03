@@ -20,3 +20,44 @@ class Main{
         
     }
 }
+
+Adding Hours and Time and Second 
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Enter The hour:");
+        int hr = sc.nextInt();
+        System.out.println("Enter The Minutes:");
+        int min = sc.nextInt();
+        System.out.println("Enter The second:");
+        int sec = sc.nextInt();
+
+        System.out.println("Enter The hr2:");
+        int hr2 = sc.nextInt();
+        System.out.println("Enter The min2:");
+        int min2 = sc.nextInt();
+        System.out.println("Enter The second2:");
+        int sec2 = sc.nextInt();
+
+        // Add seconds
+        int a = sec + sec2;
+        int c= a / 60;
+        int Sec = a % 60;
+
+        // Add minutes
+        int Min = min + min2 + c;
+        int Hr = Min / 60;
+        int n = Min % 60;
+
+        // Add hours
+        int f = hr + hr2 + Hr;
+
+        System.out.println("Hours: " + f);
+        System.out.println("Minutes: " + n);
+        System.out.println("Seconds: " + Sec);
+    }
+}
+
