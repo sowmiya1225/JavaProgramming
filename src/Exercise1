@@ -104,3 +104,63 @@ public class Main{
          }
     }
 }
+
+//Polymorphism:
+//i)overloading
+import java.util.*;
+class file{
+    void display(String s){
+        System.out.println("This is:"+s);
+    }
+     void display(int n){
+        System.out.println("Polymorphism"+n+"types");
+    }
+     void display(String s,int a){
+        System.out.println("This is "+a+" method:" +s);
+    }
+}
+class Main{
+    public static void main(String[]args){
+        file f=new file();
+        f.display("overloading");
+    }
+}
+
+//ii) overriding -> different class same method
+import java.util.*;
+class Parents{
+    void display(int a,int b){
+        System.out.println(a+" "+b);
+    }
+}
+class Children extends Parents{
+    void display(int a){
+         System.out.println(a);
+    }
+}
+class Main{
+    public static void main(String[]args){
+        Children f=new Children();
+        f.display(2);
+    }
+}
+
+//Sequential:
+import java.util.*;
+public class Main{
+    public static void main(String[]args){
+        int n=5;
+        int count =0;
+		while(n!=1){
+		    if(n%2==0){
+		        n=n/2;
+		    }
+		    else{
+		        n=3*n+1;
+		    }
+		    System.out.println(n+" ");
+		    count++;
+		}
+		System.out.println(count);
+    }
+}
