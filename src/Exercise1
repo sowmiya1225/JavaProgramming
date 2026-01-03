@@ -1,0 +1,22 @@
+  import java.util.Scanner;
+class Main{
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Enter The value:");
+        int n=sc.nextInt();
+        System.out.println("Enter The dollar:");
+        int dollar=sc.nextInt();
+        System.out.println("Enter The Cents:");
+        int cents =sc.nextInt(); 
+        int dollar1=sc.nextInt();
+        int cents2=sc.nextInt(); 
+        int Sum=dollar+dollar1;
+        int sumofCents=cents+cents2;
+        int c=sumofCents/100;
+        int E=Sum+c;
+        int D=sumofCents%100;
+        System.out.println(E);
+        System.out.println(D);
+        
+    }
+}
