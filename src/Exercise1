@@ -145,7 +145,7 @@ class Main{
     }
 }
 
-//Sequential:
+//Collatz Sequential:
 import java.util.*;
 public class Main{
     public static void main(String[]args){
@@ -162,5 +162,18 @@ public class Main{
 		    count++;
 		}
 		System.out.println(count);
+    }
+}
+//Singleline array input and output
+import java.util.*;
+public class Main{
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+    
+        int a[]=new int[n];
+        for(int i=0;i<n;a[i++]=sc.nextInt());
+         for(int i=0;i<n;System.out.println(a[i++]+" "));
+        
     }
 }
