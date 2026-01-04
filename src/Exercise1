@@ -224,3 +224,35 @@ Thread r1 = new Thread(t1);
 r1.start();
 }
 }
+//index change the values
+
+import java.util.ArrayList;
+import java.util.Scanner;
+public class Main{
+    public static void main(String[]args){
+      Scanner sc=new Scanner(System.in);
+      int n=sc.nextInt();
+      int arr[]=new int[n+1];
+      for(int i=0;i<n;i++){
+          arr[i]=sc.nextInt();
+      }
+    	System.out.println("Enter Index: ");
+         int index = sc.nextInt()-1;
+        System.out.println("Enter Value : ");
+         int val = sc.nextInt();
+        System.out.println("My array with lextra space ");
+          for(int i = 0 ; i < n + 1 ; i++){
+              System.out.print(arr[i]+" ");
+          }
+            for(int i= n; i>=index; i--){
+                arr[i] = arr[i-1];
+          }
+       arr[index] = val;
+       System.out.println();
+       System.out.print("Final answer: ");
+       for(int i = 0 ; i < n + 1 ; i++){
+             System.out.print(arr[i]+" ");
+          }
+
+	}
+}
