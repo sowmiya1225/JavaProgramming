@@ -177,3 +177,50 @@ public class Main{
         
     }
 }
+
+//MultiThreading Concept
+// i) Thread 
+//maximum priority 10 //minimum priority 1//default 5 
+// 0 1 2 3 4 5
+class Mythread extends Thread{
+public void run()//this place we can define method as run() or start()
+{
+    for(int i=0;i<3;i++){
+System.out.println("Thread is running "+Thread.currentThread().getName());
+System.out.println("Thread is running "+Thread.currentThread());
+}
+}
+}
+public class Main
+{
+public static void main(String[] args) {
+Mythread t1 = new Mythread(); // New -> Runnable
+t1.setName("Music"); //Set the name but its not priority based it will run 
+Mythread t2 = new Mythread();
+t2.setPriority(Thread.MAX_PRIORITY);
+Mythread t3 = new Mythread();
+Mythread t4 = new Mythread();                                                                 
+Mythread t5 = new Mythread();
+t1.start();// Running ->Wait->Terminated
+t2.start();
+t3.start();
+t4.start();
+t5.start();//t5.run(); if we run this the output is main because it only calling. 
+}
+}
+// ii) Runnable interface
+class Mythread implements Runnable{
+public void run(){
+    for(int i = 0 ; i < 10 ; i++){
+        System.out.println("Thread is running "+Thread.currentThread().getName());
+}
+}
+}
+public class Main
+{
+public static void main(String[] args) {
+Mythread t1 = new Mythread(); //
+Thread r1 = new Thread(t1);
+r1.start();
+}
+}
