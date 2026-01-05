@@ -301,6 +301,7 @@ public class Main{
          System.out.println("Empty: "+l.isEmpty());
    } 
 }
+
 //Queue:
 import java.util.Queue;
 import java.util.Collections;
@@ -321,4 +322,29 @@ public class Main{
         
         
    } 
+}
+
+// Map 
+//It does not allow duplicate
+//hash collision
+import java.util.HashMap;
+import java.util.Map;
+public class Main {
+public static void main(String[] args) {
+	Map<Integer,String> n=new HashMap<>();
+	//   key  value
+	n.put(0, "apple");
+	n.put(1, "orange");
+	n.put(2, "kiwi");
+	n.put(3, "strawberry");
+	n.put(4, "berries");
+	System.out.println(n);
+	System.out.println(n.size());
+	System.out.println(n.get(2));
+	System.out.println(n.containsValue("blueberry"));
+    System.out.println(n.entrySet());
+	System.out.println(n.remove(4));
+	System.out.println(n.values());
+	System.out.println(n.keySet());
+}
 }
