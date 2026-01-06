@@ -435,3 +435,112 @@ public static void main(String[] args) {
 		    System.out.println(sum);
 	}
 }
+/******************************************************************************
+
+Input :
+6
+12 23 35 56 78 90
+112
+
+Output :
+3
+45 67 9 75 12 69 -> Started Outer for loop 1st 
+
+45>67 ->F skip
+67>9 ->T Swap
+
+45 9 67 75 12 69
+
+67>75 -> F skip
+75>12 ->T Swap
+
+45 9 67 12 75 69
+
+75>69 -> T Swap
+
+45 9 67 12 69 75 -> end Outer for loop 1st
+45 9 67 12 69 75 ->Started Outer for loop 2nd iteration 
+45 > 9 ->T Swap
+
+9 45 67 12 69 75
+
+45>67 - F skip
+67>12 -> T Swap
+
+9 45 12 67 69 75
+
+67>69 - F skip 
+69>75 - F skip
+
+9 45 12 67 69 75 ->3rd outer loop iteration  
+9>45 - F skip 
+45 > 12 - T Swap
+
+9 12 45 67 69 75 
+*******************************************************************************/
+import java.util.*;
+public class Main
+{   //Linear Search
+    public static int linears(int[] arr , int key){
+        for(int i = 0 ; i < arr.length ; i++){
+            if(arr[i]==key) 
+                return i;
+        }return -1;
+    }
+    //binary search
+    public static int binarys(int[] arr,int key){
+        int left = 0;
+        int right = arr.length-1;
+        while(left<=right){
+            int mid = (left+right)/2;
+            if(arr[mid]==key){
+                return mid;
+            }
+            if(key>arr[mid]){
+                left = mid+1;
+            }
+            if(key<arr[mid]){
+                right = mid-1;
+            }
+        }
+        return -1;
+    }
+    //Bubble Sort
+    public static void bubblesort(int[] arr){
+        for(int i = 0 ; i<arr.length-1; i++){
+            for(int j = 0 ; j < arr.length-1;j++){
+                if(arr[j]>arr[j+1]){
+                    int t = arr[j];
+                    arr[j] = arr[j+1];
+                    arr[j+1] = t;
+                }
+            }
+        }
+    }
+    public static void display(int[] arr){
+    
+        for(int i = 0 ; i < arr.length ; i++){
+            System.out.print(arr[i]+" ");
+        }
+        System.out.println();
+    }
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int n = sc.nextInt();
+		int[] arr = new int[n];
+		for(int i = 0 ; i < n ; i++){
+		    arr[i] = sc.nextInt();
+		}
+		int key = sc.nextInt();
+		display(arr);
+		bubblesort(arr);
+		display(arr);
+		System.out.println("Target value present in : "+binarys(arr,key));
+	}
+}
+
+
+
+
+
+
