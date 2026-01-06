@@ -580,5 +580,25 @@ public class Main
 }
 }
 }
+//Find missing number
+public class Main {
 
+    public static int findMissingNumber(int[] arr) {
+        int n = arr.length + 1;
+        int e = n * (n + 1) / 2;
+        int Sum = 0;
+        for (int num : arr) {
+            Sum += num;
+        }
+        return (int) (e - Sum);
+    }
+
+    public static void main(String[] args) {
+        int[] arr1 = {8, 2, 4, 5, 3, 7, 1};
+        System.out.println("Output: " + findMissingNumber(arr1));
+        
+        int[] arr2 = {1, 2, 3, 5};
+        System.out.println("Output: " + findMissingNumber(arr2)); 
+    }
+}
 
