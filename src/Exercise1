@@ -1,3 +1,21 @@
+1. Pattern Matching (Basics)
+Naive Pattern Matching
+Problem:
+Check if pattern p exists in text t.
+Input:
+"hello world" t =
+= p "world"
+Output: true
+First Non-Repeating Character
+Problem:
+Find the first non-repeating character.
+
+2. First Non-Repeating Character
+Problem:
+Find the first non-repeating character.
+Input: "aabbcddee"
+Output: 'c'
+
 // Conversion:dollar to cents
 import java.util.Scanner;
 class Main{
