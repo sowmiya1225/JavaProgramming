@@ -601,4 +601,36 @@ public class Main {
         System.out.println("Output: " + findMissingNumber(arr2)); 
     }
 }
-
+//leedcode 609
+class Solution {
+    public boolean detectCapitalUse(String word) {
+        int n = word.length();
+        char c = word.charAt(0);
+        if (c >= 'A' && c <= 'Z') {
+            if (n > 1 && word.charAt(1) >= 'A' && word.charAt(1) <= 'Z') {
+                for (int i = 2; i < n; i++) {
+                    if (word.charAt(i) < 'A' || word.charAt(i) > 'Z') {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            else {
+                for (int i = 1; i < n; i++) {
+                    if (word.charAt(i) < 'a' || word.charAt(i) > 'z') {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+        else {
+            for (int i = 1; i < n; i++) {
+                if (word.charAt(i) < 'a' || word.charAt(i) > 'z') {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+}
