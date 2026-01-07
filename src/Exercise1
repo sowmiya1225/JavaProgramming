@@ -634,3 +634,23 @@ class Solution {
         }
     }
 }
+
+// Palindrome using methods
+import java.util.*;
+public class Main{
+    public static void main(String[]args){
+        String s="HELLO";
+        int l=0;
+        int r=s.length()-1;
+        while (l < r) {
+            if (s.charAt(l) != s.charAt(r)) {
+                System.out.println("not palindrome");
+                return;
+            }
+            l++;
+            r--;
+        }
+                System.out.println("Palindrome");
+          
+        }
+    }
