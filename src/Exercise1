@@ -756,3 +756,36 @@ public class Main
 		hello(n,a);
 	}
 }
+// sum of array
+
+import java.util.*;
+public class Main
+{
+	static int sum(int[] arr, int index) {
+		if(index==0)
+			return arr[0];
+		return arr[index]+sum(arr, index-1);
+	}
+	public static void main(String[] args) {
+		int[] arr = {1,2,3,4,5};
+		System.out.println(sum(arr, arr.length-1));
+	}
+}
+//Fibinacci
+import java.util.*;
+
+public class Main
+{
+	static int fib(int n) {
+		if(n==0)
+			return 0;
+		if(n==1)
+			return 1;
+		return fib(n-1)+fib(n-2);
+	}
+	public static void main(String[] args) {
+	    Scanner sc=new Scanner(System.in);
+		int n = sc.nextInt();
+		System.out.println(fib(n));
+	}
+}
