@@ -789,3 +789,32 @@ public class Main
 		System.out.println(fib(n));
 	}
 }
+//Number pattern
+public class Main {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int n = sc.nextInt();
+		int start = 1;
+		int end =(n * (n + 1) ) ;
+		for(int i = 0 ; i<n; i++) {
+			for(int j = 0 ; j < i*2; j++) {// for spaces
+				System.out.print(" ");
+			}
+			int lc = n-i;
+			int rc = n-i;
+			for(int a = 0 ; a<lc; a++) { // left pattern
+				System.out.print(start);
+				System.out.print("*");
+				start++;
+			}
+			int r_start = end-rc+1;
+			for(int b = 0; b <rc; b++) {
+				System.out.print(r_start);
+				if(b<rc-1)System.out.print("*");
+				r_start++;
+			}
+			System.out.println();
+			end = end-rc;
+		}
+	}
+}
