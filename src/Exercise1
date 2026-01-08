@@ -703,8 +703,56 @@ public class Main{
     String s1 = sc.next().toLowerCase();
     String s2 = sc.next().toLowerCase();
     Anagram (s1,s2);
-
-        
+     
     }
 }
+RECURSION
+//recursive function a^n use to find the value
+import java.util.*;
+public class Main
+{
+	static int pow(int a, int n) {
 
+		if(n==0)
+			return 1;
+		return a*pow(a,n-1);
+	}
+	public static void main(String[] args) {
+		Scanner sc =new Scanner(System.in);
+		int n = sc.nextInt();
+		System.out.println(pow(2,n));
+	}
+}
+//Factorial
+import java.util.*;
+public class Main
+{
+	static int factorial(int n) {
+
+		if(n==1)
+			return 1;
+		return n*factorial(n-1);
+	}
+	public static void main(String[] args) {
+		Scanner sc =new Scanner(System.in);
+		int n = sc.nextInt();
+		System.out.println(factorial(n));
+	}
+}
+//forward order 
+import java.util.*;
+public class Main
+{
+	static void hello(int n,int a) {
+        if(n>a)
+			return ;
+		System.out.println("Hello "+n);
+		hello(n+1,a);
+	}
+	public static void main(String[] args) {
+		Scanner sc =new Scanner(System.in);
+		int n = sc.nextInt();
+		int a = sc.nextInt();
+		hello(n,a);
+	}
+}
