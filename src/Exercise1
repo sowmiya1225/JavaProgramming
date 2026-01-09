@@ -843,7 +843,8 @@ public class Main{
         }     
     }     
 }
-//
+
+//prefix sum used to calculate between sum of range
 import java.util.*;
 public class Main
 {
@@ -869,5 +870,49 @@ public class Main
 		}
 
 
+	}
+}
+
+// prefix sum using primenumbers
+import java.util.*;
+public class Main
+{
+	static boolean prime (int a) {
+		for(int i = 2 ; i < (a / 2) + 1 ; i++) {
+			if(a%i==0)
+				return false;
+		}
+		return true;
+	}
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter the number:");
+		int n = sc.nextInt();
+		ArrayList<Integer> p= new ArrayList<>();
+		for(int i = 2 ; i <= n; i++) {
+			if(prime(i))
+				p.add(i);
+		}
+		System.out.println(p);
+		ArrayList<Integer> prefix_sum = new ArrayList<>();
+		if(p.size()>=2) {
+			prefix_sum.add(p.get(0)+p.get(1));
+			for(int i = 2 ; i < p.size(); i++) {
+				prefix_sum.add(prefix_sum.get(i-2)+p.get(i));
+			}
+			System.out.println(prefix_sum);
+			int c = 0;
+			for(int x: prefix_sum) {
+				if(x > n)
+					break;
+				if(prime(x) && x <= n)
+					c++;
+			}
+			System.out.println(c);
+		}
+		else {
+			System.out.println(0);
+		}
 	}
 }
