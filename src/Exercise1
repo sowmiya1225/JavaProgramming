@@ -818,3 +818,56 @@ public class Main {
 		}
 	}
 }
+
+//Array of sum multiple times get user input to perform that
+import java.util.*;
+public class Main{
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int arr[]=new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=sc.nextInt();
+       } 
+        int ls=0;
+         int rs=0;
+        int m=sc.nextInt();
+        for(int i=0;i<m;i++){
+             ls=sc.nextInt();
+             rs=sc.nextInt();
+             int sum=0;
+             for(int j=ls;j<=rs;j++){
+                  sum+=arr[j];
+            }
+         System.out.println("QUERY "+sum);
+        }     
+    }     
+}
+//
+import java.util.*;
+public class Main
+{
+	public static void main(String[] args) {
+		new Scanner(System.in);
+		Scanner sc =new Scanner(System.in);
+		int n = sc.nextInt(); //5
+		int[] arr = new int[n]; // [0,0,0,0,0]
+		for(int i = 0 ; i < n; i++) {
+			arr[i] = sc.nextInt();//[2,4,6,8,10]
+		}
+			int[] prefix_sum = new int[n]; // [0,0,0,0,0]
+			prefix_sum[0] = arr[0]; // [2,0,0,0,0]
+		
+		for(int i = 1 ; i<n; i++) {
+			prefix_sum[i] = prefix_sum[i-1]+arr[i]; // i = 1
+		}
+		int q=sc.nextInt();
+        for(int i=0; i<q; i++) {
+		    int start=sc.nextInt();
+		    int end=sc.nextInt();
+			System.out.println(prefix_sum[end]- prefix_sum[start-1]);
+		}
+
+
+	}
+}
