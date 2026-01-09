@@ -1,3 +1,15 @@
+2) Given an array of integers, rearrange the array in such a way that:
+The first element is the maximum,
+The second element is the minimum,
+The third is the second maximum,
+The fourth is the second minimum, and so on.
+Input: {1, 2, 3, 4, 5, 6, 7}
+Output: {7, 1, 6, 2, 5, 3, 4}
+
+3) You're given a string as input. You have to reverse the string by keeping the punctuation and spaces. You must modify the source string itself without creating another string.
+Example:
+Input: A man, in the boat says: I see 1-2-3 in the sky
+
 1. Pattern Matching (Basics)
 Naive Pattern Matching
 Problem:
