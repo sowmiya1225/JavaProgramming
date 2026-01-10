@@ -1083,3 +1083,29 @@ public class Main {
 	}
 
 }
+//Longest Substring Repeating Characters
+Without
+Find the length of the longest substring characters. without repeating
+Example:
+Input: "abcabcbb"
+Output: 3
+import java.util.*;
+public class Main {
+	public static void main(String[]args) {
+		Scanner sc=new Scanner(System.in);
+		String l=sc.next();
+		Set<Character> set=new HashSet<>();
+		int left=0;
+		int maxi=0;
+		for(int i=0;i< l.length();i++){
+		    while(set.contains(l.charAt(i))){
+		        set.remove(l.charAt(i));
+		            left++;
+		    }
+		    set.add(l.charAt(i));
+            maxi= Math.max(maxi, i-left+1);
+		}
+		System.out.println(maxi);
+	}
+
+}
