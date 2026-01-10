@@ -988,3 +988,58 @@ public class Main {
 	
 	}
 }
+//Longest Word in a Sentence
+Find the longest word in a given sentence.
+Example:
+Input: "Java is very powerful"
+Output: "powerful"
+
+public class Main
+{
+	public static void main(String[] args) {
+	 String s="Java is very powerful";
+	 String a[]=s.split(" ");
+	 String ans=" ";
+	 for(String x:a){
+	     if(x.length()>ans.length()){
+	         ans=x;
+	     }
+	 }
+	 System.out.println(ans);
+}
+}
+ same question without buildin function
+public class Main {
+	public static void  main(String[]args)
+	{
+		String s = "Java is powerful";
+		StringBuilder word = new StringBuilder(); // Javai
+		StringBuilder ans = new StringBuilder();//"Java"
+
+		for(int i = 0 ;i < s.length(); i++){
+		    if(s.charAt(i)!=' ')
+		    {
+				word.append(s.charAt(i));
+			}
+			else {
+				if(word.length()>ans.length()) 
+				{
+                    ans=word;
+				}
+				word.setLength(0);
+			}
+		}
+		System.out.println(ans);
+	}
+}
+//
+public class Main{
+    public static void main(String[]args){
+        String s1="abcd";
+        String s2="cdab";
+        s1+=s1; 
+        System.out.println(s1.length());
+        System.out.print(s1.contains(s2));
+        }
+}
+//
