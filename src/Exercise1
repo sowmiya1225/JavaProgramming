@@ -1062,3 +1062,24 @@ public class Main{
        System.out.println(sb);
 }
 }
+// flower flight flow =>fl
+import java.util.*;
+public class Main {
+	public static void main(String[]args) {
+		Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		String [] a=new String[n];
+		for(int i=0; i<n; i++) {
+			a[i]=sc.next();
+		}
+		Arrays.sort(a);
+		String first = a[0];
+		String last = a[a.length-1]; 
+		int i = 0;
+		while(i < first.length() && first.charAt(i)==last.charAt(i)) {
+			i++;
+		}
+	    System.out.println(first.substring(0,i));
+	}
+
+}
