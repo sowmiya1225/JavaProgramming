@@ -1109,3 +1109,31 @@ public class Main {
 	}
 
 }
+// ### occurs stop the program and it dont repeat 
+import java.util.*;
+public class Main {
+	public static void main (String[] args) {
+		Scanner sc = new Scanner(System.in);
+		ArrayList<String> word = new ArrayList<>();
+		while(true) {
+			String s = sc.next();
+			if(s.equals("####")) {
+				break;
+			}
+			word.add(s);
+		}
+		System.out.println(word);
+		ArrayList<String> ans = new ArrayList<>();
+		ans.add(word.get(0));
+		for(int i = 1 ; i < word.size(); i++) {
+			String prev = word.get(i-1);
+			String curr= word.get(i);
+			if(ans.contains (curr))
+				break;
+			if(prev.charAt(prev.length()-1)==curr.charAt(0)) {
+				ans.add(curr);
+			}
+		}
+		System.out.println(ans);
+	}
+}
