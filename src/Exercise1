@@ -1,3 +1,64 @@
+public class MainClass {
+    // Define the Node class as a static nested class to be used within MainClass
+    static class Node {
+        int data;
+        Node next;
+
+        Node(int d) {
+            data = d;
+            next = null;
+        }
+    }
+
+    // A main method to demonstrate the reversal
+    public static void main(String[] args) {
+        // Build a sample linked list: 1 -> 2 -> 3 -> 4 -> 5
+        Node head = new Node(1);
+        head.next = new Node(2);
+        head.next.next = new Node(3);
+        head.next.next.next = new Node(4);
+        head.next.next.next.next = new Node(5);
+
+        System.out.println("Original list:");
+        printList(head);
+
+        // Call the helper function to reverse the list and update the head reference
+        head = helper(head);
+
+        System.out.println("Reversed list:");
+        printList(head);
+    }
+
+    // The corrected recursive helper function for linked list reversal
+    public static Node helper(Node n) {
+        // Base case: If the list is empty or has only one node, it's already reversed
+        if (n == null || n.next == null) {
+            return n;
+        }
+
+        // Recursively reverse the rest of the list starting from the next node
+        Node newHead = helper(n.next);
+
+        // Link the next node's next pointer back to the current node
+        n.next.next = n;
+
+        // Set the current node's next pointer to null to break the cycle and mark it as the new tail
+        n.next = null;
+
+        // Return the new head of the reversed list, which is propagated up the call stack
+        return newHead;
+    }
+
+    // Helper method to print the linked list
+    public static void printList(Node node) {
+        while (node != null) {
+            System.out.print(node.data + " ");
+            node = node.next;
+        }
+        System.out.println();
+    }
+}
+
 2) Given an array of integers, rearrange the array in such a way that:
 The first element is the maximum,
 The second element is the minimum,
