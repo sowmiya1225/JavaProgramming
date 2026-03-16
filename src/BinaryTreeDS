@@ -1,0 +1,183 @@
+package phasethree;
+
+import java.util.Queue;
+import java.util.Stack;
+import java.util.LinkedList;
+
+	public class BinaryTreeDS {
+	    public static void main(String[] args) {
+	        BinaryTree bt = new BinaryTree();
+	        bt.insertNode('A');
+	        bt.insertNode('B');
+	        bt.insertNode('C');
+	        bt.insertNode('D');
+	        bt.insertNode('E');
+	        bt.insertNode('F');
+	        bt.insertNode('G');
+	        bt.insertNode('H');
+	        bt.insertNode('I');
+
+	        bt.levelOrder();
+	        bt.deleteNode('C');
+	        bt.levelOrder();
+	        bt.deleteNode('A');
+	        bt.levelOrder();
+	    }
+	}
+
+	class BinaryTree {
+
+	    Node root;
+
+	    class Node {
+	        char val;
+	        Node left = null;
+	        Node right = null;
+
+	        Node(char val) {
+	            this.val = val;
+	        }
+	    }
+
+	    void insertNode(char val) {
+	        Node nn = new Node(val);
+	        if (root == null) {
+	            root = nn;
+	        } else {
+	            Queue<Node> q = new LinkedList<>();
+	            q.offer(root);
+	            while (!q.isEmpty()) {
+	                Node n = q.poll();
+	                if (n.left == null) {
+	                    n.left = nn;
+	                    break;
+	                } else {
+	                    q.offer(n.left);
+	                }
+	                if (n.right == null) {
+	                    n.right = nn;
+	                    break;
+	                } else {
+	                    q.offer(n.right);
+	                }
+	            }
+	        }
+	    }
+
+	    void doInorder() {
+	        System.out.print("IN   -> ");
+	        inorder(root);
+	        System.out.println();
+	    }
+
+	    void doPreorder() {
+	        System.out.print("PRE  -> ");
+	        preorder(root);
+	        System.out.println();
+	    }
+
+	    void doPostorder() {
+	        System.out.print("POST -> ");
+	        postorder(root);
+	        System.out.println();
+	    }
+
+	    void inorder(Node n) {
+	        if (n == null)
+	            return;
+	        inorder(n.left);
+	        System.out.print(n.val + " ");
+	        inorder(n.right);
+	    }
+
+	    void preorder(Node n) {
+	        if (n == null)
+	            return;
+	        System.out.print(n.val + " ");
+	        preorder(n.left);
+	        preorder(n.right);
+	    }
+
+	    void postorder(Node n) {
+	        if (n == null)
+	            return;
+	        postorder(n.left);
+	        postorder(n.right);
+	        System.out.print(n.val + " ");
+	    }
+
+	    void levelOrder() {
+	        System.out.print("LVL  -> ");
+	        Queue<Node> q = new LinkedList<>();
+	        q.offer(root);
+
+	        while (!q.isEmpty()) {
+	            Node front = q.poll();
+	            System.out.print(front.val + " ");
+	            if (front.left != null)
+	                q.offer(front.left);
+	            if (front.right != null)
+	                q.offer(front.right);
+	        }
+	        System.out.println();
+	    }
+
+	    void deleteNode(char key) {
+	        Node target = null; // C
+
+	        Queue<Node> q = new LinkedList<>();
+	        q.offer(root);
+
+	        while (!q.isEmpty()) {
+	            Node f = q.poll();
+	            if (f.val == key) {
+	                target = f;
+	            }
+	            if (f.left != null)
+	                q.offer(f.left);
+	            if (f.right != null)
+	                q.offer(f.right);
+	            if (q.size() == 1)
+	                break;
+	        }
+	        Node repl = q.poll(); // I
+	        target.val = repl.val;
+
+	        q.offer(root);
+	        Node replParent = null;
+
+	        while (!q.isEmpty()) {
+	            Node f = q.poll();
+
+	            if (f.left != null) {
+	                if (f.left == repl) {
+	                    replParent = f;
+	                    break;
+	                } else {
+	                    q.offer(f.left);
+	                }
+	            }
+	            if (f.right != null) {
+	                if (f.right == repl) {
+	                    replParent = f;
+	                    break;
+	                } else {
+	                    q.offer(f.right);
+	                }
+	            }
+
+	        }
+
+	        // replParent -> I oda parent
+	        // repl -> I node
+
+	        if (replParent.left == repl) {
+	            replParent.left = null;
+	        } else {
+	            replParent.right = null;
+	        }
+
+	    }
+
+	
+}
