@@ -1,0 +1,314 @@
+package phasethree;
+
+public class Singlylinkedlistprogram {
+
+	    public static void main(String[] args) {
+	    	System.out.println("Queue");
+	    	Queue q=new Queue();
+	    	q.enqueue(1);
+	    	q.print();
+	    	q.enqueue(2);
+	    	q.print();
+	    	q.enqueue(5);
+	    	q.print();
+	    	q.enqueue(7);
+	    	q.print();
+	    	
+	    	//Stack
+	    	System.out.println("Stack");
+	    	Stack st=new Stack();
+	    	st.push(1);
+	    	st.push(2);
+	    	st.push(5);
+	    	st.push(7);
+	    	st.print();
+	    	st.pop();
+	    	st.peek();
+	    	st.print();
+	    	
+	    	//monotonic stack
+	    	System.out.println("Monotonic increasing and decreasing");
+	        MonotonicI mi = new MonotonicI();
+	        MonotonicD md = new MonotonicD();
+	        int[] nums = { 1, 7, 9, 5, 8 };
+
+	        for (int num : nums) {
+	            mi.push(num);
+	            md.push(num);
+	        }
+	        mi.print();
+	        md.print();
+	    }
+	}
+
+	class LinkedList {
+
+	    Node head = null;
+
+	    class Node {
+	        int data;
+	        Node next = null;
+
+	        Node(int data) {
+	            this.data = data;
+	        }
+	    }
+
+	    /**
+	     * TC - O(n)
+	     * 
+	     * @param data
+	     */
+	    void insertAtEnd(int data) {
+	        Node nn = new Node(data);
+
+	        if (head == null) {
+	            head = nn;
+	        } else {
+	            Node temp = head;
+	            while (temp.next != null) {
+	                temp = temp.next;
+	            }
+	            temp.next = nn;
+	        }
+	    }
+
+	    /**
+	     * TC - O(1)
+	     * 
+	     * @param data
+	     */
+	    void insertAtFront(int data) {
+	        Node nn = new Node(data);
+	        nn.next = head;
+	        head = nn;
+	    }
+
+	    /**
+	     * TC -> O(n)
+	     * 
+	     * @param data
+	     * @param pos
+	     */
+	    void insertAtPosition(int data, int pos) {
+	        if (pos == 1) {
+	            insertAtFront(data);
+	        } else {
+	            Node nn = new Node(data);
+	            Node temp = head;
+	            for (int i = 1; i <= pos - 2; i++) {
+	                temp = temp.next;
+	            }
+	            nn.next = temp.next;
+	            temp.next = nn;
+	        }
+
+	    }
+
+	    /**
+	     * TC -> O(n)
+	     * 
+	     * @return
+	     */
+	    int deleteAtEnd() {
+	        if (head == null) {
+	            return -1;
+	        } else {
+	            Node temp = head;
+	            while (temp.next != null && temp.next.next != null) {
+	                temp = temp.next;
+	            }
+	            int deletedValue = temp.next.data;
+	            temp.next = null;
+	            return deletedValue;
+	        }
+	    }
+
+	    /**
+	     * TC -> O(1)
+	     * 
+	     * @return
+	     */
+	    int deleteAtFront() {
+	        if (head == null) {
+	            return -1;
+	        } else {
+	            int deleted = head.data;
+	            head = head.next;
+	            return deleted;
+	        }
+	    }
+
+	    /**
+	     * TC -> O(n)
+	     * 
+	     * @param pos
+	     * @return
+	     */
+	    int deleteAtPosition(int pos) {
+	        if (pos <= 0) {
+	            System.out.println("Invalid position");
+	            return -1;
+	        }
+	        if (pos == 1)
+	            return deleteAtFront();
+	        Node temp = head;
+
+	        for (int i = 1; i <= pos - 2 && temp != null; i++) {
+	            temp = temp.next;
+	        }
+	        if (temp == null) {
+	            System.out.println("Given Position exceeds the length of the LL");
+	            return -1;
+	        }
+	        int deleted = temp.next.data;
+	        temp.next = temp.next.next;
+	        return deleted;
+	    }
+
+	    /**
+	     * 
+	     * A -> B -> C -> D -> E -> null
+	     * 
+	     * null <- A <- B <- C <- D <- E
+	     * 
+	     * traverse from left to right
+	     * 
+	     * left = null
+	     * 
+	     * 1st Iteration
+	     * temp -> A
+	     * temp.next -> B
+	     *
+	     * temp -> A
+	     * right = temp.next // B
+	     * temp.next -> left
+	     * left = temp // A
+	     * temp = right
+	     * 
+	     * 2nd Iteration
+	     * 
+	     * temp -> B
+	     * temp.next -> C
+	     * 
+	     * temp -> B
+	     * temp.next -> A
+	     */
+
+	    void reverse() {
+	        Node temp = head; // null
+	        Node left = null; // E
+	        Node right = null; // null
+
+	        while (temp != null) {
+	            right = temp.next;
+	            temp.next = left;
+	            left = temp;
+	            temp = right;
+	        }
+	        head = left;
+	    }
+
+	    void recursiveReverse() {
+	        head = helper(head);
+	    }
+
+	    // A -> B
+	    // A -> B -> A
+	    // A X B -> A
+	    // B -> A
+	    Node helper(Node node) {
+	        if (node == null || node.next == null) {
+	            return node;
+	        }
+	        Node newHead = helper(node.next);
+	        // A -> B -> ? = A
+	        node.next.next = node;
+	        // A -> X
+	        node.next = null;
+	        return newHead;
+	    }
+
+	    public void print() {
+	        Node temp = head;
+	        if (head == null) {
+	            System.out.println("LinkedList is NUll");
+	            return;
+	        }
+
+	        while (temp.next != null) {
+	            System.out.print(temp.data + " -> ");
+	            temp = temp.next;
+	        }
+	        System.out.println(temp.data);
+	    }
+	}
+
+	class Stack extends LinkedList {
+
+	    void push(int data) {
+	        insertAtFront(data);
+	    }
+
+	    int pop() {
+	        return deleteAtFront();
+	    }
+
+	    int peek() {
+	        return super.head.data;
+	    }
+
+	    boolean isEmpty() {
+	        return this.head == null;
+	    }
+
+	    public void print() {
+
+	        helperPrint(this.head);
+	        System.out.println();
+	    }
+
+	    void helperPrint(Node n) {
+	        if (n == null)
+	            return;
+	        helperPrint(n.next);
+	        System.out.print(n.data + " | ");
+	    }
+	}
+
+	class Queue extends LinkedList {
+	    void enqueue(int data) {
+	        insertAtEnd(data);
+	    }
+
+	    int dequeue() {
+	        return deleteAtFront();
+	    }
+
+	    int peek() {
+	        return super.head.data;
+	    }
+
+	    boolean isEmpty() {
+	        return super.head == null;
+	    }
+	}
+
+	class MonotonicI extends Stack {
+	    void push(int data) {
+	        while (!super.isEmpty() && super.peek() > data) {
+	            super.pop();
+	        }
+	        super.push(data);
+	    }
+	}
+
+	class MonotonicD extends Stack {
+	    void push(int data) {
+	        while (!super.isEmpty() && super.peek() < data) {
+	            super.pop();
+	        }
+	        super.push(data);
+	    }
+	}
+
