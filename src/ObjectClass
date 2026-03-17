@@ -1,0 +1,17 @@
+package phasethree;
+import java.util.*;
+public class Listpro {
+		public static void main(String[]args) {
+			Object arr[]=new Object[10];//Object array for different datatype without using collection.
+			arr[0]=Byte.valueOf((byte)120);
+			arr[1]=Long.valueOf(12000000);
+			arr[2]=Short.valueOf((short)1200);
+			arr[3]=Float.valueOf(2.3f);
+			arr[4]=String.valueOf("Hello");
+			arr[5]=Character.valueOf('A');
+			arr[6]=Boolean.valueOf(true);
+			arr[7]=Integer.valueOf(67);
+			arr[8]=Double.valueOf(127);
+			System.out.println(Arrays.toString(arr));
+		}
+}
