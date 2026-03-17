@@ -1,0 +1,266 @@
+package phasethree;
+// Prims,kruskal,adjacencymatrix,adjcencyList
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Queue;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Set;
+import java.util.HashSet;
+
+public class Graphprogram {
+
+    public static void main(String[] args) {
+
+        GraphProgramDS g = new GraphProgramDS();
+
+        g.addNode("erode");
+        g.addNode("coimbatore");
+        g.addNode("salem");
+        g.addNode("namakkal");
+        g.addNode("karur");
+        g.addNode("madurai");
+        g.addNode("trichy");
+        g.addNode("tanjore");
+        g.addNode("chennai");
+        g.addNode("tirupati");
+        g.addNode("bangalore");
+
+        g.addEdge("coimbatore", "erode", 97);
+        g.addEdge("coimbatore", "karur", 89);
+
+        g.addEdge("erode", "salem", 68);
+        g.addEdge("erode", "namakkal", 56);
+
+        g.addEdge("salem", "bangalore", 230);
+        g.addEdge("salem", "chennai", 325);
+        g.addEdge("salem", "tirupati", 300);
+        g.addEdge("salem", "namakkal", 25);
+
+        g.addEdge("chennai", "tirupati", 50);
+
+        g.addEdge("namakkal", "trichy", 48);
+        g.addEdge("namakkal", "karur", 37);
+
+        g.addEdge("trichy", "karur", 39);
+        g.addEdge("trichy", "tanjore", 46);
+
+        g.addEdge("karur", "madurai", 55);
+
+        g.addEdge("madurai", "tanjore", 98);
+
+        g.kruskal("erode");
+        g.primsAlgo("erode");
+    }
+}
+
+class GraphProgramAM {
+
+    int[][] adjMatrix;
+    int n;
+
+    GraphProgramAM(int n) {
+        this.n = n;
+        adjMatrix = new int[n][n];
+    }
+
+    void addEdge(char from, char to, int weight) {
+
+        int fromIndex = from - 65;
+        int toIndex = to - 65;
+
+        adjMatrix[fromIndex][toIndex] = weight;
+        adjMatrix[toIndex][fromIndex] = weight;
+    }
+
+    void deleteEdge(char from, char to) {
+
+        int fromIndex = from - 65;
+        int toIndex = to - 65;
+
+        adjMatrix[fromIndex][toIndex] = 0;
+    }
+
+    void print() {
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+
+                if (adjMatrix[i][j] != 0) {
+
+                    char from = (char) (i + 65);
+                    char to = (char) (j + 65);
+
+                    System.out.println(from + " -> " + to + " => " + adjMatrix[i][j]);
+                }
+            }
+        }
+    }
+}
+
+class GraphProgramDS {
+
+    class Edge {
+
+        String to;
+        int weight;
+
+        Edge(String to, int weight) {
+            this.to = to;
+            this.weight = weight;
+        }
+
+        public String toString() {
+            return "(" + to + "/" + weight + ")";
+        }
+    }
+
+    Map<String, List<Edge>> adjList = new HashMap<>();
+
+    void addNode(String node) {
+        adjList.putIfAbsent(node, new LinkedList<>());
+    }
+
+    void addEdge(String from, String to, int weight) {
+
+        adjList.get(from).add(new Edge(to, weight));
+        adjList.get(to).add(new Edge(from, weight));
+    }
+
+    class Path implements Comparable<Path> {
+
+        String from;
+        String to;
+        int weight;
+
+        Path(String from, String to, int weight) {
+            this.from = from;
+            this.to = to;
+            this.weight = weight;
+        }
+
+        public int compareTo(Path p2) {
+            return this.weight - p2.weight;
+        }
+
+        public String toString() {
+            return "(" + from + "-" + to + "/" + weight + ")";
+        }
+    }
+
+    void primsAlgo(String start) {
+
+        Set<String> visited = new HashSet<>();
+        List<Path> mst = new LinkedList<>();
+
+        PriorityQueue<Path> pq = new PriorityQueue<>();
+
+        pq.offer(new Path(null, start, 0));
+
+        while (!pq.isEmpty()) {
+
+            Path front = pq.poll();
+
+            if (visited.contains(front.to)) {
+                continue;
+            }
+
+            visited.add(front.to);
+
+            if (front.from != null) {
+                mst.add(front);
+            }
+
+            List<Edge> neighbours = adjList.get(front.to);
+
+            for (Edge neigh : neighbours) {
+
+                if (!visited.contains(neigh.to)) {
+
+                    pq.offer(new Path(front.to, neigh.to, neigh.weight));
+                }
+            }
+        }
+
+        System.out.println(mst);
+    }
+
+    class GraphProgramDSU {
+
+        Map<String, String> parent = new HashMap<>();
+
+        void makeSet(String n) {
+            parent.put(n, n);
+        }
+
+        void union(String a, String b) {
+
+            String parentA = find(a);
+            String parentB = find(b);
+
+            if (!parentA.equals(parentB)) {
+                parent.put(parentB, parentA);
+            }
+        }
+
+        String find(String s) {
+
+            if (parent.get(s).equals(s)) {
+                return s;
+            }
+
+            String p = find(parent.get(s));
+            parent.put(s, p);
+            return p;
+        }
+    }
+
+    void kruskal(String start) {
+
+        GraphProgramDSU dsu = new GraphProgramDSU();
+
+        for (String key : adjList.keySet()) {
+            dsu.makeSet(key);
+        }
+
+        List<Path> paths = new LinkedList<>();
+
+        for (String key : adjList.keySet()) {
+
+            String from = key;
+            List<Edge> neighs = adjList.get(key);
+
+            for (Edge nei : neighs) {
+
+                String to = nei.to;
+                int weight = nei.weight;
+
+                if (from.compareTo(to) < 0) {
+                    paths.add(new Path(from, to, weight));
+                }
+            }
+        }
+
+        Collections.sort(paths);
+
+        List<Path> mst = new LinkedList<>();
+
+        for (Path p : paths) {
+
+            String rootA = dsu.find(p.from);
+            String rootB = dsu.find(p.to);
+
+            if (!rootA.equals(rootB)) {
+
+                mst.add(p);
+                dsu.union(p.from, p.to);
+            }
+        }
+
+        System.out.println(mst);
+    }
+}
