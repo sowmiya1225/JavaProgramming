@@ -1,0 +1,195 @@
+package phasethree;
+ //maxheap,minheap
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+	public class HeapProgram {
+
+	    public static void main(String[] args) {
+
+	        MinHeapProgram mnh = new MinHeapProgram(10);
+	        MaxHeapProgram mxh = new MaxHeapProgram(10);
+
+	        for (int i = 10; i > 0; i--) {
+	            mnh.insert(i);       // 10 -> 1
+	            mxh.insert(11 - i);  // 1 -> 10
+	        }
+
+	        int k = 5;
+
+	        for (int i = 1; i <= k; i++) {
+	            System.out.print(mnh.getMinElement() + " ");
+	        }
+
+	        System.out.println();
+
+	        for (int i = 1; i <= k; i++) {
+	            System.out.print(mxh.getMaxElement() + " ");
+	        }
+	    }
+	}
+
+	class HeapBase {
+
+	    int[] heap;
+	    int index = 0;
+
+	    HeapBase(int size) {
+	        heap = new int[size];
+	    }
+
+	    int parent(int i) {
+	        return (i - 1) / 2;
+	    }
+
+	    int left(int i) {
+	        return (i * 2) + 1;
+	    }
+
+	    int right(int i) {
+	        return (i * 2) + 2;
+	    }
+
+	    void swap(int from, int to) {
+	        int temp = heap[from];
+	        heap[from] = heap[to];
+	        heap[to] = temp;
+	    }
+
+	    void levelOrderInsert(int val) {
+	        heap[index++] = val;
+	    }
+
+	    int deleteAndReplace() {
+	        int deleted = heap[0];
+	        heap[0] = heap[index - 1];
+	        index--;
+	        return deleted;
+	    }
+
+	    void print() {
+	        for (int i = 0; i < index; i++) {
+	            System.out.print(heap[i] + " ");
+	        }
+	        System.out.println();
+	    }
+	}
+
+	class MinHeapProgram extends HeapBase {
+
+	    MinHeapProgram(int size) {
+	        super(size);
+	    }
+
+	    void insert(int num) {
+	        levelOrderInsert(num);
+	        heapifyUp(index - 1);
+	    }
+
+	    void heapifyUp(int childIndex) {
+
+	        int parentIndex = parent(childIndex);
+
+	        while (childIndex > 0 && heap[parentIndex] > heap[childIndex]) {
+
+	            swap(parentIndex, childIndex);
+
+	            childIndex = parentIndex;
+	            parentIndex = parent(childIndex);
+	        }
+	    }
+
+	    int getMinElement() {
+
+	        int min = deleteAndReplace();
+	        heapifyDown();
+	        return min;
+	    }
+
+	    void heapifyDown() {
+
+	        int parentIndex = 0;
+
+	        while (left(parentIndex) < index) {
+
+	            int leftChildIndex = left(parentIndex);
+	            int rightChildIndex = right(parentIndex);
+
+	            int smallestIndex = leftChildIndex;
+
+	            if (rightChildIndex < index &&
+	                    heap[rightChildIndex] < heap[leftChildIndex]) {
+
+	                smallestIndex = rightChildIndex;
+	            }
+
+	            if (heap[parentIndex] <= heap[smallestIndex]) {
+	                break;
+	            }
+
+	            swap(parentIndex, smallestIndex);
+	            parentIndex = smallestIndex;
+	        }
+	    }
+	}
+
+	class MaxHeapProgram extends HeapBase {
+
+	    MaxHeapProgram(int size) {
+	        super(size);
+	    }
+
+	    void insert(int num) {
+	        levelOrderInsert(num);
+	        heapifyUp(index - 1);
+	    }
+
+	    void heapifyUp(int childIndex) {
+
+	        int parentIndex = parent(childIndex);
+
+	        while (childIndex > 0 && heap[parentIndex] < heap[childIndex]) {
+
+	            swap(parentIndex, childIndex);
+
+	            childIndex = parentIndex;
+	            parentIndex = parent(childIndex);
+	        }
+	    }
+
+	    int getMaxElement() {
+
+	        int max = deleteAndReplace();
+	        heapifyDown();
+	        return max;
+	    }
+
+	    void heapifyDown() {
+
+	        int parentIndex = 0;
+
+	        while (left(parentIndex) < index) {
+
+	            int leftChildIndex = left(parentIndex);
+	            int rightChildIndex = right(parentIndex);
+
+	            int largestIndex = leftChildIndex;
+
+	            if (rightChildIndex < index &&
+	                    heap[rightChildIndex] > heap[leftChildIndex]) {
+
+	                largestIndex = rightChildIndex;
+	            }
+
+	            if (heap[parentIndex] >= heap[largestIndex]) {
+	                break;
+	            }
+
+	            swap(parentIndex, largestIndex);
+	            parentIndex = largestIndex;
+	        }
+	    }
+	
+}
