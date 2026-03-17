@@ -1,0 +1,95 @@
+package phasethree;
+
+
+	//HashSet, HashMap Implementation
+import java.util.List;
+import java.util.LinkedList;
+
+	public class HashSetDS {
+	    public static void main(String[] args) {
+
+	        HashMap<Integer, String> hm = new HashMap<>();
+	        hm.put(1, "Apple");
+	        hm.put(2, "Apple");
+	        hm.put(3, "Apple");
+	        hm.put(3, "Mango");
+	        hm.print();
+	    }
+	}
+
+	class HashSet {
+	    List<Integer>[] hashTable = new LinkedList[10];
+
+	    void add(int n) {
+	        int hashIndex = hash(n);
+	        if (hashTable[hashIndex] == null) {
+	            hashTable[hashIndex] = new LinkedList<>();
+	        } else {
+	            for (int i : hashTable[hashIndex]) {
+	                if (i == n)
+	                    return;
+	            }
+	        }
+	        hashTable[hashIndex].add(n);
+	    }
+
+	    int hash(int n) {
+	        return n % 10;
+	    }
+
+	    void print() {
+	        for (List<Integer> a : hashTable) {
+	            if (a == null)
+	                continue;
+	            System.out.print(a + " ");
+	        }
+	    }
+	}
+
+	class HashMap<K, V> {
+
+	    class Node {
+	        K key;
+	        V value;
+
+	        public Node(K key, V value) {
+	            this.key = key;
+	            this.value = value;
+	        }
+
+	        public String toString() {
+	            return "{" + this.key + ":" + this.value + "}";
+	        }
+
+	    }
+
+	    List<Node>[] hashTable = new LinkedList[10];
+
+	    void put(K key, V val) {
+	        int hashIndex = hash(key);
+	        if (hashTable[hashIndex] == null) {
+	            hashTable[hashIndex] = new LinkedList<>();
+	        } else {
+	            for (Node i : hashTable[hashIndex]) {
+	                if (i.key.equals(key)) {
+	                    i.value = val;
+	                    return;
+	                }
+	            }
+	        }
+	        hashTable[hashIndex].add(new Node(key, val));
+	    }
+
+	    int hash(K key) {
+	        return ((Integer) key) % 10;
+	    }
+
+	    void print() {
+	        for (List<Node> a : hashTable) {
+	            if (a == null)
+	                continue;
+	            System.out.print(a + " ");
+	        }
+	    }
+	
+}
