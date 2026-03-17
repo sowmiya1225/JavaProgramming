@@ -1,0 +1,217 @@
+package phasethree;
+import java.util.LinkedList;
+import java.util.Queue;
+
+	public class BSTDS {
+	    public static void main(String[] args) {
+	        BST t = new BST();
+	        t.insertNode(8);
+	        t.insertNode(3);
+	        t.insertNode(10);
+	        t.insertNode(6);
+	        t.insertNode(14);
+	        t.insertNode(1);
+	        t.insertNode(7);
+	        t.insertNode(4);
+	        t.insertNode(13);
+	        t.doInorder();
+	        t.levelOrder();
+	        t.deleteNode(8);
+	        t.doInorder();
+	        t.levelOrder();
+	    }
+	}
+
+	class BST {
+	    Node root = null;
+
+	    class Node {
+	        int val;
+	        Node left;
+	        Node right;
+
+	        Node(int val) {
+	            this.val = val;
+	        }
+	    }
+
+	    void insertNode(int val) {
+	        Node nn = new Node(val);
+	        if (root == null) {
+	            root = nn;
+	            return;
+	        }
+	        Node temp = root;
+
+	        while (true) {
+	            if (val < temp.val) {
+	                if (temp.left == null) {
+	                    temp.left = nn;
+	                    break;
+	                }
+	                temp = temp.left;
+	            } else {
+	                if (temp.right == null) {
+	                    temp.right = nn;
+	                    break;
+	                }
+	                temp = temp.right;
+	            }
+	        }
+	    }
+
+	    void doInorder() {
+	        System.out.print("IN   -> ");
+	        inorder(root);
+	        System.out.println();
+	    }
+
+	    void doPreorder() {
+	        System.out.print("PRE  -> ");
+	        preorder(root);
+	        System.out.println();
+	    }
+
+	    void doPostorder() {
+	        System.out.print("POST -> ");
+	        postorder(root);
+	        System.out.println();
+	    }
+
+	    void inorder(Node n) {
+	        if (n == null)
+	            return;
+	        inorder(n.left);
+	        System.out.print(n.val + " ");
+	        inorder(n.right);
+	    }
+
+	    void preorder(Node n) {
+	        if (n == null)
+	            return;
+	        System.out.print(n.val + " ");
+	        preorder(n.left);
+	        preorder(n.right);
+	    }
+
+	    void postorder(Node n) {
+	        if (n == null)
+	            return;
+	        postorder(n.left);
+	        postorder(n.right);
+	        System.out.print(n.val + " ");
+	    }
+
+	    void levelOrder() {
+	        System.out.print("LVL  -> ");
+	        Queue<Node> q = new LinkedList<>();
+	        q.offer(root);
+
+	        while (!q.isEmpty()) {
+	            Node front = q.poll();
+	            System.out.print(front.val + " ");
+	            if (front.left != null)
+	                q.offer(front.left);
+	            if (front.right != null)
+	                q.offer(front.right);
+	        }
+	        System.out.println();
+	    }
+
+	    void deleteNode(int key) {
+	        Node targetP = null;
+	        Node target = null;
+	        Node temp = root;
+
+	        // to find the target parent and target;
+	        while (temp != null) {
+	            targetP = target;
+	            target = temp;
+	            if (temp.val == key) {
+	                break;
+	            }
+	            if (temp.val < key) {
+	                temp = temp.right;
+	            } else {
+	                temp = temp.left;
+	            }
+	        }
+
+	        // checking if we missed the target or not
+	        if (target.val != key) {
+	            System.out.println("Target not found");
+	            return;
+	        }
+
+	        // handling the 3 scenarios, -> 2child or 1child or 0child
+	        if (target.left == null && target.right == null) {
+	            // it has 0 child
+	            if (targetP.left == target) {
+	                targetP.left = null;
+	            } else {
+	                targetP.right = null;
+	            }
+	            return;
+	        } else {
+	            // either it can have 1 or 2 child
+	            if (target.left != null && target.right == null) {
+
+	                // we have child on left side but not on right side
+	                Node child = target.left;
+
+	                if (targetP.left == target) {
+	                    targetP.left = child;
+	                } else {
+	                    targetP.right = child;
+	                }
+	            } else if (target.right != null && target.left == null) {
+	                // right la irku, but left la illa
+
+	                Node child = target.right;
+
+	                if (targetP.left == target) {
+	                    targetP.left = child;
+	                } else {
+	                    targetP.right = child;
+	                }
+	            } else {
+	                // / 2 child irkanga, either replace with
+	                // inorder predecessor, or inorder successor
+
+	                // INORDER PREDECESSOR -> largest val in Lsub tree
+
+	                Node LSTroot = target.left;
+
+	                Node tempxP = null;
+	                Node tempx = LSTroot; // used for traversal
+
+	                while (true) {
+	                    if (tempx.left == null && tempx.right == null) {
+	                        break;
+	                    }
+	                    tempxP = tempx;
+	                    if (tempx.right != null) {
+	                        tempx = tempx.right;
+	                    } else {
+	                        tempx = tempx.left;
+	                    }
+	                }
+	                // tempx -> INORDER PREDECESSOR
+	                // tempxP -> IP Parent Node
+	                target.val = tempx.val;
+	                System.out.println("Parent " + tempxP.val);
+
+	                if (tempxP.left == tempx) {
+	                    tempxP.left = null;
+	                } else {
+	                    tempxP.right = null;
+	                }
+
+	            }
+
+	        }
+
+	    }
+
+	
+}
