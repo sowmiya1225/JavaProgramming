@@ -1,0 +1,311 @@
+package phasethree;
+
+//Graph, Djikstra, Bellman Ford
+import java.util.HashMap;
+import java.util.List;
+import java.util.Queue;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Set;
+import java.util.HashSet;
+
+	public class GraphDS {
+	    public static void main(String[] args) {
+	        Graph g = new Graph();
+	        g.addNode("erode");
+	        g.addNode("coimbatore");
+	        g.addNode("salem");
+	        g.addNode("namakkal");
+	        g.addNode("karur");
+	        g.addNode("madurai");
+	        g.addNode("trichy");
+	        g.addNode("tanjore");
+	        g.addNode("chennai");
+	        g.addNode("tirupati");
+	        g.addNode("bangalore");
+
+	        g.addEdge("coimbatore", "erode", 97);
+	        g.addEdge("coimbatore", "karur", 89);
+
+	        g.addEdge("erode", "salem", 68);
+	        g.addEdge("erode", "namakkal", 56);
+
+	        g.addEdge("salem", "bangalore", 230);
+	        g.addEdge("salem", "chennai", 325);
+	        g.addEdge("salem", "tirupati", 300);
+	        g.addEdge("salem", "namakkal", 25);
+
+	        g.addEdge("chennai", "tirupati", 50);
+
+	        g.addEdge("namakkal", "trichy", 48);
+	        g.addEdge("namakkal", "karur", 37);
+
+	        g.addEdge("trichy", "karur", 39);
+	        g.addEdge("trichy", "tanjore", 46);
+
+	        g.addEdge("karur", "madurai", 55);
+
+	        g.addEdge("madurai", "tanjore", 98);
+
+	        long start = System.nanoTime();
+	        g.djikstra("erode");
+	        long end = System.nanoTime();
+	        System.out.println((end - start) / 1000000l + " ms");
+
+	        long bstart = System.nanoTime();
+	        g.bellManFord("erode");
+	        long bend = System.nanoTime();
+	        System.out.println((bend - bstart) / 1000000l + " ms");
+	    }
+	}
+
+	class GraphAM {
+	    int[][] adjMatrix;
+	    int n;
+
+	    /**
+	     * _____A B C D E
+	     * _____| | | | |
+	     * A -> 0 1 0 0 0
+	     * B -> 0 0 0 0 0
+	     * C -> 0 0 0 0 0
+	     * D -> 0 0 0 0 0
+	     * E -> 0 0 0 0 0
+	     * 
+	     * i -> 0 + 65 A
+	     * j -> 1 + 65 B
+	     */
+	    // 5
+	    GraphAM(int n) {
+	        this.n = n;
+	        adjMatrix = new int[n][n];
+	    }
+
+	    void addEdge(char from, char to, int weight) {
+	        // A -> 65 - 65 = 0
+	        // B -> 66 - 65 = 1
+	        // C -> 67 - 65 = 2
+	        // D -> 68 - 65 = 3
+	        // E -> 69 - 65 = 4
+	        int fromIndex = from - 65;
+	        int toIndex = to - 65;
+
+	        adjMatrix[fromIndex][toIndex] = weight;
+	        adjMatrix[toIndex][fromIndex] = weight;
+	    }
+
+	    void deleteEdge(char from, char to) {
+	        int fromIndex = from - 65;
+	        int toIndex = to - 65;
+	        adjMatrix[fromIndex][toIndex] = 0;
+	    }
+
+	    void print() {
+	        for (int i = 0; i < n; i++) {
+	            for (int j = 0; j < n; j++) {
+	                if (adjMatrix[i][j] != 0) {
+	                    char from = (char) (i + 65);
+	                    char to = (char) (j + 65);
+	                    System.out.println(from + " -> " + to + " => " + adjMatrix[i][j]);
+	                }
+	            }
+	        }
+	    }
+	}
+
+	class Graph {
+
+	    class Edge {
+	        String to;
+	        int weight;
+
+	        Edge(String to, int weight) {
+	            this.to = to;
+	            this.weight = weight;
+	        }
+
+	        @Override
+	        public String toString() {
+	            return "(" + to + "/" + weight + ")";
+	        }
+	    }
+
+	    Map<String, List<Edge>> map = new HashMap<>();
+
+	    Graph() {
+
+	    }
+
+	    void addNode(String node) {
+	        map.putIfAbsent(node, new LinkedList<>());
+	    }
+
+	    void addEdge(String from, String to, int weight) {
+	        map.get(from).add(new Edge(to, weight));
+	        map.get(to).add(new Edge(from, weight));
+	    }
+
+	    void removeEdge(String from, String to) {
+	        map.get(from).remove(to);
+	    }
+
+	    void print() {
+
+	        for (Map.Entry<String, List<Edge>> entry : map.entrySet()) {
+	            System.out.println(entry.getKey() + " -> " + entry.getValue());
+	        }
+	    }
+
+	    void bfs(String start) {
+	        Queue<String> q = new LinkedList<>();
+	        Set<String> visited = new HashSet<>();
+	        q.offer(start);
+	        visited.add(start);
+
+	        while (!q.isEmpty()) {
+	            String front = q.poll();
+	            // System.out.print(front + " ");
+
+	            List<Edge> neighbours = map.get(front);
+
+	            for (Edge nei : neighbours) {
+	                String neiName = nei.to;
+
+	                if (!visited.contains(neiName)) {
+	                    q.offer(neiName);
+	                    visited.add(neiName);
+	                } else {
+	                    System.out.println("Cycle irku ");
+	                }
+	            }
+	        }
+	    }
+
+	    void dfs(String start) {
+	        Set<String> visited = new HashSet<>();
+	        helper(start, visited);
+	    }
+
+	    void helper(String point, Set<String> visited) {
+	        if (visited.contains(point)) {
+	            return;
+	        }
+	        visited.add(point);
+	        System.out.print(point + " ");
+	        List<Edge> neighbours = map.get(point);
+	        for (Edge e : neighbours) {
+	            helper(e.to, visited);
+	        }
+
+	    }
+
+	    class Pair implements Comparable<Pair> {
+	        String destn;
+	        int distance;
+
+	        Pair(String destn, int dist) {
+	            this.destn = destn;
+	            this.distance = dist;
+	        }
+
+	        public int compareTo(Pair p2) {
+	            return this.distance - p2.distance;
+	        }
+	    }
+
+	    // ALWAYS PICK THE NODE WITH SMALLEST TRAVELLED DISTANCE
+	    void djikstra(String start) {
+	        Map<String, Integer> distMap = new HashMap<>();
+
+	        for (String place : map.keySet()) {
+	            distMap.put(place, Integer.MAX_VALUE);
+	        }
+
+	        distMap.put(start, 0);
+
+	        PriorityQueue<Pair> pq = new PriorityQueue<>();
+
+	        pq.offer(new Pair(start, 0));
+
+	        while (!pq.isEmpty()) {
+	            Pair front = pq.poll();
+
+	            if (front.distance > distMap.get(front.destn)) {
+	                continue;
+	            }
+
+	            String currentPairName = front.destn;
+
+	            // get all outs -> all available neighbours
+	            List<Edge> neighs = map.get(currentPairName);
+
+	            // traverse them
+	            for (Edge nei : neighs) {
+
+	                // to calculate the distance we need
+	                // to add with our current dist
+	                int newDistanceToNei = front.distance + nei.weight;
+
+	                // if the new distance is
+	                // smaller, update hashmap, add to queue, else ignore
+	                // GOAL -> to find min dist
+	                if (newDistanceToNei < distMap.get(nei.to)) {
+	                    distMap.put(nei.to, newDistanceToNei);
+	                    pq.offer(new Pair(nei.to, newDistanceToNei));
+	                }
+
+	            }
+	        }
+	        printMap(distMap);
+	    }
+
+	    void printMap(Map<String, Integer> map) {
+
+	        System.out.printf("| %10s | %3s |\n", "dest", "kms");
+	        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+	            System.out.printf("| %10s | %3d |\n", entry.getKey(), entry.getValue());
+	        }
+	    }
+
+	    void bellManFord(String start) {
+	        Map<String, Integer> distMap = new HashMap<>();
+	        for (String place : map.keySet()) {
+	            distMap.put(place, Integer.MAX_VALUE);
+	        }
+
+	        distMap.put(start, 0);
+
+	        int noOfVertices = map.size();
+
+	        // relax edges v-1 times (ignore the costly path)
+	        // 1-> n-1
+	        for (int i = 1; i < noOfVertices; i++) {
+
+	            // get all the destinations
+	            for (String node : map.keySet()) {
+
+	                // get all neighbours
+	                List<Edge> neighs = map.get(node);
+
+	                for (Edge nei : neighs) {
+
+	                    // if it is not updated
+	                    if (distMap.get(node) != Integer.MAX_VALUE) {
+
+	                        // distance travelled so far + weight
+	                        int newDist = distMap.get(node) + nei.weight;
+
+	                        if (newDist < distMap.get(nei.to)) {
+	                            distMap.put(nei.to, newDist);
+	                        }
+
+	                    }
+	                }
+	            }
+	        }
+	        printMap(distMap);
+
+	    }
+	
+}
